@@ -9,49 +9,39 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="../static/js/main.js"></script>
-    
-    <title>Document</title>
+    <title>Video to ASCII Art</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="width: 80%;">
+        
         <h1>Video to ASCII Art ＼(^o^)／</h1>
 
-        <div class="row-md-2"></div>
-
         <div class="row">
-        
-            <div class="col-md-5">
+            <div class="col">
                 <h2>Originai Video</h2>
-                <div class="card" style="height: 30rem;">
-                    <div class="card-body">
-                        <!-- <img src="" class="img-thumbnail" alt="" onerror="this.style.display='none'"> -->
-                        <img src="" id="selected-file">
-                    </div>
+                <div class="card" style="">
+                    <iframe height="300" src="" id="selected-file"></iframe>
                 </div>
-
-                <label for="user-file" class="form-label">Large file input example</label>
-                <input class="form-control form-control-lg" id="user-file" type="file">
-            <button class="btn btn-primary" onclick="fetch_data()">post</button>
-            </div>
-
-            <div class="col-md-2">
-                <img src="../static/imgs/converting.gif" class="mx-auto d-block" alt="">
-            </div>
-
-            <div class="col-md-5">
-                <h2>ASCII Art</h2>
-                <div class="card" style="height: 30rem;">
-                    <div class="card-body">
-                        <div class="result"></div>
-                    </div>
+                <div>
+                    <label for="user-file" class="form-label">Upload a video</label>
+                    <input class="form-control form-control-sm" id="user-file" type="file">
+                    <button class="btn btn-info" onclick="fetch_data()">post</button>
                 </div>
             </div>
-
         </div>
 
-
-        <div id="result"></div>
-</div>
+        <div class="row" style="margin-top: 10rem; margin-bottom: 30rem;">
+            <div class="col">
+                <h2>ASCII Art</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div id = "result" style="font-size:35%; height:300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 
 
 
