@@ -18,13 +18,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
-def double(x):
-    # print('計算の中')
-    for i in range(1000000000/2):
-        a = i
-    return f'The double of {x} is {x*x}.'
-
-
 @app.post("/api")
 def api(video: UploadFile = File(...)):
     data = video.filename
