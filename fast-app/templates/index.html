@@ -12,27 +12,29 @@
     <title>Video to ASCII Art</title>
 </head>
 <body>
-    <div class="container" style="width: 80%;">
+    <div class="container" style="width: 100%;">
         
         <h1>Video to ASCII Art ＼(^o^)／</h1>
 
-        <div class="row">
+        <div class="row" style="margin-top: 5rem;margin-bottom: 5rem;">
             <div class="col">
                 <h2>Originai Video</h2>
-                <div class="card" style="">
+                <div class="card" style="margin:1rem;">
                     <iframe height="300" src="" id="selected-file"></iframe>
                 </div>
-                <form id='videoform'>
+                <form id='videoform' style="margin-top: 1rem;margin-bottom: 1rem;">
                     <input class="form-control form-control-sm" id="user-file" type="file">
                 </form>
                 <button class="btn btn-info" onclick="fetch_data()">post</button>
             </div>
         </div>
 
-        <div class="row" style="margin-top: 10rem; margin-bottom: 30rem;">
+        <div style="text-align: center;"><img src="../static/imgs/converting.gif" id="convImg" class="mx-auto"  style="display:none;" alt=""></div>
+
+        <div class="row" style="margin-top: 5rem; margin-bottom: 30rem;">
             <div class="col">
                 <h2>ASCII Art</h2>
-                <div class="card">
+                <div class="card" style="margin:1rem;">
                     <div class="card-body">
                         <div id = "result" style="font-size:35%; height:300px;"></div>
                     </div>
