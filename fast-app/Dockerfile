@@ -5,6 +5,7 @@ WORKDIR /fast-app
 RUN apt update && \
     apt install -y python3-dev && \
     apt-get clean && \
+    apt-get install -y libgl1-mesa-dev &&\
     rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt .

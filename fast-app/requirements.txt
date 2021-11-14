@@ -6,5 +6,5 @@ pandas
 numpy
 opencv-python
 python-multipart
-cv2
 pillow
+opencv-contrib-python
