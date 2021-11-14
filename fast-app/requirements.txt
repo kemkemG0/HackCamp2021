@@ -5,3 +5,6 @@ Jinja2
 pandas
 numpy
 opencv-python
+python-multipart
+cv2
+pillow
