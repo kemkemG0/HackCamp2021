@@ -1,6 +1,7 @@
 import cv2
 import os
-
+import numpy as np
+from imgProc import convertToASCII
 
 def save_all_frames(video_path, dir_path, basename, ext='jpg'):
     cap = cv2.VideoCapture(video_path)
@@ -20,8 +21,9 @@ def save_all_frames(video_path, dir_path, basename, ext='jpg'):
     while True:
         ret, frame = cap.read()
         if ret and n % 5 == 0:
-            cv2.imwrite('{}_{}.{}'.format(
-                base_path, str(n).zfill(digit), ext), frame)
+            convertToASCII(frame, n)
+            
+            
         elif not ret:
             return
         n += 1
