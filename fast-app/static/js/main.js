@@ -22,22 +22,23 @@
 //   })
 // }
 
-const main = ()=>{
+const display_selected_video = () => {
   const inputElement = document.getElementById("user-file");
   inputElement.addEventListener("change", handleFiles, false);
-    
   function handleFiles() {
-    const file = this.files[0]; /* ファイルリストを処理するコードがここに入る */
+    const file = this.files[0];
     console.log(file)
-  
     // ファイルのブラウザ上でのURLを取得する
     const blobUrl = window.URL.createObjectURL(file);
-  
-    // img要素に表示
-    const img = document.getElementById('selected-file');
-    img.src = blobUrl;
-  
-  }
+    // video 要素に表示
+    const video = document.getElementById('selected-file');
+    video.src = blobUrl;
 }
+}
+
+const main = ()=>{
+  display_selected_video();
+}
+
 
 window.onload = main;
