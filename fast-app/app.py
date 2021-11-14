@@ -9,6 +9,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 import shutil
 import cv2
+from imgProc.getFrame import save_all_frames
 
 
 def save_upload_file_tmp(upload_file: UploadFile) -> Path:
@@ -43,7 +44,11 @@ def api(video: UploadFile = File(...)):
     tmp_path = save_upload_file_tmp(video)
     tmp_path = str(tmp_path)
 
-    return {"art": get_length_of_video(tmp_path)}
+    save_all_frames(tmp_path)
+
+    data = 'OK!!!!!!'
+
+    return {"art": data}
 
 
 @app.get("/")
