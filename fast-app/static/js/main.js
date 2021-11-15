@@ -1,12 +1,33 @@
 let user_file = null;
+let is_conv = false;
 
-const fetch_data = ()=>{
+const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const create_animation = async (data)=>{
+  const arr = data.art;
+  for (let i = 0; i < arr.length; i++) {
+    $("#result").text(arr[i]);
+    await _sleep(1000);
+  }
+}
+
+const switch_is_conv = ()=>{
+  is_conv=!is_conv;
+  if (is_conv) {
+    document.getElementById("convImg").style.display = "";
+  }
+  else{
+    document.getElementById("convImg").style.display = "none";
+  }
+}
+
+const fetch_data = async ()=>{
   console.log('fetch start');
   console.log(user_file);
-
   let fd = new FormData();
   fd.append("video", user_file);
+
+  switch_is_conv();
 
   // POST to API
   $.ajax({
@@ -15,12 +36,13 @@ const fetch_data = ()=>{
       data: fd,
       processData: false,
       contentType: false,
-      cache: false,
-  }).done(function (data) {
+      cache: false
+  }).done( async (data) =>{
       console.log('done!!');
       console.log(data)
-      $("#result").text(data.art);
-  }).fail(function() {
+      switch_is_conv();
+      await create_animation(data);
+  }).fail( ()=> {
       console.log('fail');
   });
 }
