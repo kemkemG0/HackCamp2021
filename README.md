@@ -1,5 +1,4 @@
 # PLEASE USE GoogleChrome for running
-# PLEASE USE GoogleChrome for running
 
 
 ![original (1)](https://user-images.githubusercontent.com/70839560/141720015-5a020b7c-c601-48b0-b13e-bb116a2cb143.gif)
