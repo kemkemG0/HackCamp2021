@@ -2,7 +2,7 @@ import cv2
 colorset = "MWN$@%#&B89EGA6mK5HRkbYT43V0JL7gpaseyxznocv?jIftr1li*=-~^`':;,. "
 
 
-def convertToASCII(img, n, outFiles):
+def convertToASCII(img, n):
     # resize image
     # determine resize scale with respect to the width = 400
     height, width, _ = img.shape
@@ -18,11 +18,11 @@ def convertToASCII(img, n, outFiles):
 
     gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
+    output = ""
 
     for gray2 in gray:
-        output = '<br>'
         for dark in gray2:
             output += colorset[dark // 4] * 2
-    
-    outFiles.append(output)
+        output += '<br>'
 
+    return output
