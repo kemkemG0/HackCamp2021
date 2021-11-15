@@ -1,5 +1,6 @@
 let user_file = null;
 let is_conv = false;
+let animation_data = null;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -42,12 +43,17 @@ const fetch_data = async ()=>{
       cache: false
   }).done( async (data) =>{
       console.log('done!!');
-      console.log(data)
+      animation_data = data;
       switch_is_conv();
       await create_animation(data);
   }).fail( ()=> {
       console.log('fail');
   });
+}
+
+const play = () =>{
+  if(!animation_data) return;
+  create_animation(animation_data);
 }
 
 const display_selected_video = () => {
