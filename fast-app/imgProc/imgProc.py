@@ -6,7 +6,6 @@ def convertToASCII(img, n):
     # resize image
     # determine resize scale with respect to the width = 400
     height, width, _ = img.shape
-    scale_percent = width / 400 * 100
 
     scale_percent = 12  # percent of original size
     width = int(img.shape[1] * scale_percent / 100)
