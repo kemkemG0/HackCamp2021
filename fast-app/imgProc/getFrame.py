@@ -1,5 +1,4 @@
 import cv2
-import os
 from imgProc.imgProc import convertToASCII
 
 outFiles = []
@@ -14,8 +13,6 @@ def save_all_frames(video_path, dir_path='Output', ext='jpg'):
         print('cannot open')
         return
 
-    os.makedirs(dir_path, exist_ok=True)
-
     n = 0
     while True:
         ret, frame = cap.read()
@@ -24,8 +21,3 @@ def save_all_frames(video_path, dir_path='Output', ext='jpg'):
         elif not ret:
             return out
         n += 1
-
-
-if __name__ == "__main__":
-    save_all_frames('sampleVideos/sample_Trim.mp4',
-                    'Output', 'sample_video_img')
