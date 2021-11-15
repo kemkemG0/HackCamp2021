@@ -6,6 +6,7 @@ outFiles = []
 
 
 def save_all_frames(video_path, dir_path='Output', ext='jpg'):
+    out = []
     cap = cv2.VideoCapture(video_path)
     print(video_path)
 
@@ -19,9 +20,9 @@ def save_all_frames(video_path, dir_path='Output', ext='jpg'):
     while True:
         ret, frame = cap.read()
         if ret and n % 5 == 0:
-            convertToASCII(frame, n, outFiles)
+            out.append(convertToASCII(frame, n))
         elif not ret:
-            return
+            return out
         n += 1
 
 

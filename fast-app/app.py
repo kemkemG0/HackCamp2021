@@ -44,9 +44,11 @@ def api(video: UploadFile = File(...)):
     tmp_path = save_upload_file_tmp(video)
     tmp_path = str(tmp_path)
 
-    save_all_frames(tmp_path)
+    data = save_all_frames(tmp_path)
 
-    data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    print(len(data))
+
+    print(data[0])
 
     return {"art": data}
 
