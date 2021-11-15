@@ -12,3 +12,8 @@
 $ docker-compose up
 ```
 then, open this !  http://localhost:8989
+
+Sample viodes are under HackCamp2021/fast-app/imgProc/sampleVideos/ 
+
+video credits:
+https://www.youtube.com/watch?v=NLZP_z2PxCw
