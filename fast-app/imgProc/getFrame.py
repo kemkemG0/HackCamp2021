@@ -1,8 +1,9 @@
 import cv2
 import os
-from imgProc import convertToASCII
+from imgProc.imgProc import convertToASCII
 
 outFiles = []
+
 
 def save_all_frames(video_path, dir_path='Output', ext='jpg'):
     cap = cv2.VideoCapture(video_path)
