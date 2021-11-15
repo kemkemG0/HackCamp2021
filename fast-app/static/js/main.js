@@ -6,8 +6,9 @@ const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const create_animation = async (data)=>{
   const arr = data.art;
   for (let i = 0; i < arr.length; i++) {
-    $("#result").text(arr[i]);
-    await _sleep(1000);
+    // $("#result").text(arr[i]);
+    document.getElementById("result").innerHTML=arr[i];
+    await _sleep(100);
   }
 }
 

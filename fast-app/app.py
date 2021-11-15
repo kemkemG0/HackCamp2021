@@ -46,10 +46,6 @@ def api(video: UploadFile = File(...)):
 
     data = save_all_frames(tmp_path)
 
-    print(len(data))
-
-    print(data[0])
-
     return {"art": data}
 
 
