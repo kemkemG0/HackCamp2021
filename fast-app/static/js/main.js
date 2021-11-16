@@ -1,14 +1,14 @@
 let user_file = null;
 let is_conv = false;
 
-const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const create_animation = async (data)=>{
   const arr = data.art;
   for (let i = 0; i < arr.length; i++) {
     // $("#result").text(arr[i]);
     document.getElementById("result").innerHTML=arr[i];
-    await _sleep(100);
+    await sleep(100);
   }
 }
 
@@ -24,7 +24,9 @@ const switch_is_conv = ()=>{
 
 const fetch_data = async ()=>{
   console.log('fetch start');
-  console.log(user_file);
+
+  if(!user_file)return;
+  
   let fd = new FormData();
   fd.append("video", user_file);
 

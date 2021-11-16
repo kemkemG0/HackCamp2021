@@ -7,9 +7,13 @@ def convertToASCII(img, n):
     # determine resize scale with respect to the width = 400
     height, width, _ = img.shape
 
-    scale_percent = 12  # percent of original size
-    width = int(img.shape[1] * scale_percent / 100)
-    height = int(img.shape[0] * scale_percent / 100)
+    scale_ratio = 1  # ratio of original size
+
+    if(width >= 400):
+        scale_ratio = 400/width
+
+    width = int(width * scale_ratio)
+    height = int(height * scale_ratio)
 
     dim = (width, height)
 
