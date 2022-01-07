@@ -2,10 +2,11 @@ import cv2
 colorset = "MWN$@%#&B89EGA6mK5HRkbYT43V0JL7gpaseyxznocv?jIftr1li*=-~^`':;,. "
 
 
-def convertToASCII(img, n):
+def convertToASCII(L, img, n):
     # resize image
     # determine resize scale with respect to the width = 400
     height, width, _ = img.shape
+    print(n)
 
     scale_ratio = 1  # ratio of original size
 
@@ -28,4 +29,4 @@ def convertToASCII(img, n):
             output += colorset[dark // 4] * 2
         output += '<br>'
 
-    return output
+    L.append((n,output))
