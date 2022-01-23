@@ -12,9 +12,17 @@ This generates a fancy and cool ASCII Art Animation from a video.
 
 ## HOW TO TRY THIS OUT 🔥
 
+### with docker
 ```
 $ docker-compose up
 ```
+
+### with OUT docker
+```
+$ pip3 install -r requirements.txt
+$ uvicorn app:app --reload --host 0.0.0.0 --port 8989
+```
+
 then, open this !  http://localhost:8989
 
 Sample viodes are under ```HackCamp2021/fast-app/imgProc/sampleVideos/``` 
