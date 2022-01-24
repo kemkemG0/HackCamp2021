@@ -43,6 +43,7 @@ const fetch_data = async ()=>{
       cache: false
   }).done( async (data) =>{
       console.log('done!!');
+      console.log(data)
       animation_data = data;
       switch_is_conv();
       await create_animation(data);

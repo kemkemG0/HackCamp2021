@@ -41,17 +41,20 @@ func convertToASCII(frame_list *[]gocv.Mat) []string {
 	var result []string
 	fmt.Println("ConvertStart")
 	colorset := "MWN$@%#&B89EGA6mK5HRkbYT43V0JL7gpaseyxznocv?jIftr1li*=-~^`':;,. "
+	_, width := (*frame_list)[0].Size()[0], (*frame_list)[0].Size()[1]
+	scale_ratio := 1.0
+	if width >= 400 {
+		scale_ratio = 400.0 / float64(width)
+	}
+	var frame_string string
 	for ind, frame := range *frame_list {
-		var frame_string string
-		_, width := frame.Size()[0], frame.Size()[1]
-		scale_ratio := 1.0
-		if width >= 400 {
-			scale_ratio = 400.0 / float64(width)
-		}
+		frame_string = ""
 		gocv.Resize(frame, &frame, image.Point{}, scale_ratio, scale_ratio, gocv.InterpolationArea)
 		height, width := frame.Size()[0], frame.Size()[1]
+
 		frame.ConvertTo(&frame, gocv.MatTypeCV8U)
 		gocv.CvtColor(frame, &frame, gocv.ColorBGRAToGray)
+
 		for h := 0; h < height; h++ {
 			for w := 0; w < width; w++ {
 				frame_string += string(colorset[frame.GetUCharAt(h, w)/4]) + string(colorset[frame.GetUCharAt(h, w)/4])
@@ -62,6 +65,11 @@ func convertToASCII(frame_list *[]gocv.Mat) []string {
 		fmt.Println(ind)
 	}
 	return result
+}
+
+type MyRes struct {
+	Status int      `json:"status"`
+	Art    []string `json:"art"`
 }
 
 func api(w http.ResponseWriter, r *http.Request) {
@@ -82,13 +90,20 @@ func api(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 	tmpFile.Write(fileBytes)
+	data := MyRes{Art: save_all_frames(tmpfileName), Status: 200}
+
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
-	pj := save_all_frames(tmpfileName)
-	if err := enc.Encode(&pj); err != nil {
+	if err := enc.Encode(&data); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Fprint(w)
+	fmt.Println(buf.String())
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
+	_, err = fmt.Fprint(w, buf.String())
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 func handleRequests() {
