@@ -9,7 +9,7 @@ const create_animation = async (data)=>{
   for (let i = 0; i < arr.length; i++) {
     // $("#result").text(arr[i]);
     document.getElementById("result").innerHTML=arr[i];
-    await sleep(20);
+    await sleep(80);
   }
 }
 

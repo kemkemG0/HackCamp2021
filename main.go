@@ -9,7 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"unsafe"
 
 	"gocv.io/x/gocv"
 )
@@ -28,46 +27,38 @@ func save_all_frames(video_path string) []string {
 	n := 0
 	frame := gocv.NewMat()
 	defer frame.Close()
-	var frame_list []gocv.Mat
+	var frame_list []string
 	for cap.Read(&frame) {
 		if n%5 == 0 {
-			frame_list = append(frame_list, frame.Clone())
-			fmt.Println(unsafe.Sizeof(frame))
+			frame_list = append(frame_list, convertToASCII(&frame))
+			fmt.Println(n)
 		}
 		n += 1
 	}
-	fmt.Println(frame.Size())
-	return convertToASCII(&frame_list)
+	return frame_list
 }
 
-func convertToASCII(frame_list *[]gocv.Mat) []string {
-	var result []string
-	fmt.Println("ConvertStart")
+func convertToASCII(frame *gocv.Mat) string {
 	colorset := "MWN$@%#&B89EGA6mK5HRkbYT43V0JL7gpaseyxznocv?jIftr1li*=-~^`':;,. "
-	_, width := (*frame_list)[0].Size()[0], (*frame_list)[0].Size()[1]
+	_, width := (*frame).Size()[0], (*frame).Size()[1]
 	scale_ratio := 1.0
 	if width >= 400 {
 		scale_ratio = 400.0 / float64(width)
 	}
-	for ind, frame := range *frame_list {
-		var byte_buf bytes.Buffer
-		gocv.Resize(frame, &frame, image.Point{}, scale_ratio, scale_ratio, gocv.InterpolationArea)
-		height, width := frame.Size()[0], frame.Size()[1]
+	var byte_buf bytes.Buffer
+	gocv.Resize(*frame, frame, image.Point{}, scale_ratio, scale_ratio, gocv.InterpolationArea)
+	height, width := (*frame).Size()[0], (*frame).Size()[1]
 
-		frame.ConvertTo(&frame, gocv.MatTypeCV8U)
-		gocv.CvtColor(frame, &frame, gocv.ColorBGRAToGray)
+	frame.ConvertTo(frame, gocv.MatTypeCV8U)
+	gocv.CvtColor(*frame, frame, gocv.ColorBGRAToGray)
 
-		for h := 0; h < height; h++ {
-			for w := 0; w < width; w++ {
-				byte_buf.WriteString(string(colorset[frame.GetUCharAt(h, w)/4]) + string(colorset[frame.GetUCharAt(h, w)/4]))
-			}
-			byte_buf.WriteString("<br>")
+	for h := 0; h < height; h++ {
+		for w := 0; w < width; w++ {
+			byte_buf.WriteString(string(colorset[frame.GetUCharAt(h, w)/4]) + string(colorset[frame.GetUCharAt(h, w)/4]))
 		}
-		result = append(result, byte_buf.String())
-		fmt.Println(ind)
-		frame.Close()
+		byte_buf.WriteString("<br>")
 	}
-	return result
+	return byte_buf.String()
 }
 
 type MyRes struct {
