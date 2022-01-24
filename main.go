@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"unsafe"
 
 	"gocv.io/x/gocv"
 )
@@ -31,7 +32,9 @@ func save_all_frames(video_path string) []string {
 	for cap.Read(&frame) {
 		if n%5 == 0 {
 			frame_list = append(frame_list, frame.Clone())
+			fmt.Println(unsafe.Sizeof(frame))
 		}
+		n += 1
 	}
 	fmt.Println(frame.Size())
 	return convertToASCII(&frame_list)
@@ -46,9 +49,8 @@ func convertToASCII(frame_list *[]gocv.Mat) []string {
 	if width >= 400 {
 		scale_ratio = 400.0 / float64(width)
 	}
-	var frame_string string
 	for ind, frame := range *frame_list {
-		frame_string = ""
+		var byte_buf bytes.Buffer
 		gocv.Resize(frame, &frame, image.Point{}, scale_ratio, scale_ratio, gocv.InterpolationArea)
 		height, width := frame.Size()[0], frame.Size()[1]
 
@@ -57,12 +59,13 @@ func convertToASCII(frame_list *[]gocv.Mat) []string {
 
 		for h := 0; h < height; h++ {
 			for w := 0; w < width; w++ {
-				frame_string += string(colorset[frame.GetUCharAt(h, w)/4]) + string(colorset[frame.GetUCharAt(h, w)/4])
+				byte_buf.WriteString(string(colorset[frame.GetUCharAt(h, w)/4]) + string(colorset[frame.GetUCharAt(h, w)/4]))
 			}
-			frame_string += "<br>"
+			byte_buf.WriteString("<br>")
 		}
-		result = append(result, frame_string)
+		result = append(result, byte_buf.String())
 		fmt.Println(ind)
+		frame.Close()
 	}
 	return result
 }
@@ -97,7 +100,6 @@ func api(w http.ResponseWriter, r *http.Request) {
 	if err := enc.Encode(&data); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(buf.String())
 	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	_, err = fmt.Fprint(w, buf.String())
 	if err != nil {
@@ -113,13 +115,9 @@ func handleRequests() {
 
 func main() {
 
-	//ディレクトリを指定する
-	//ルーティング設定。"/"というアクセスがきたらstaticディレクトリのコンテンツを表示させる
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/", fs)
 	http.HandleFunc("/api", api)
-
 	log.Println("Listening...")
-	// 3000ポートでサーバーを立ち上げる
 	http.ListenAndServe(":8000", nil)
 }
